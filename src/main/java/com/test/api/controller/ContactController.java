@@ -24,29 +24,15 @@ public class ContactController {
         this.contactRepository = contactRepository;
     }
 
-    //@RequestMapping(method = RequestMethod.GET)
-    public Resources<Contact> getContacts(@RequestParam(value = "nameFilter", required = false) String nameFilter){
+    @RequestMapping(method = RequestMethod.GET)
+    public Collection<Contact> getContacts(@RequestParam(value = "nameFilter", required = false) String nameFilter){
         if(nameFilter == null) {
-            List<Contact> contactList = ((List<Contact>) contactRepository.findAll())
-                    .stream()
-                    .map(contact -> {
-                        contact.add(linkTo(methodOn(ContactController.class).getContactById(contact.getObjectId())).withSelfRel());
-                        return contact;
-                    })
-                    .collect(Collectors.toList());
-            Link categoryLink = linkTo(ContactController.class).withSelfRel();
-            return new Resources<>(contactList, categoryLink);
+            List<Contact> contactList = (List<Contact>) contactRepository.findAll();
+            return contactList;
         }
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Collection<Contact> getContactsList(@RequestParam(value = "nameFilter", required = false) String nameFilter){
-        if(nameFilter == null) {
-            return (Collection<Contact>) contactRepository.findAll();
-        }
-        return null;
-    }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public Contact getContactById(@PathVariable Long id){

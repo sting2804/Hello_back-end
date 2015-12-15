@@ -22,47 +22,47 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackageClasses = HelloBackEndApplication.class)
 public class DataSourceConfig implements TransactionManagementConfigurer {
 
-        @Value("${spring.datasource.username}")
-        private String user;
-        @Value("${spring.datasource.password}")
-        private String password;
-        @Value("${spring.datasource.url}")
-        private String dataSourceUrl;
-        @Value("${spring.datasource.driver-class-name}")
-        private String dataSourceClassName;
-        @Value("${spring.jpa.database-platform}")
-        private String dialect;
-        @Value("${spring.jpa.hibernate.ddl-auto}")
-        private String hbm2ddlAuto;
+    @Value("${spring.datasource.username}")
+    private String user;
+    @Value("${spring.datasource.password}")
+    private String password;
+    @Value("${spring.datasource.url}")
+    private String dataSourceUrl;
+    //@Value("${spring.datasource.driver-class-name}")
+    //private String dataSourceClassName;
+    @Value("${spring.jpa.database-platform}")
+    private String dialect;
+    @Value("${spring.jpa.hibernate.ddl-auto}")
+    private String hbm2ddlAuto;
 
-        @Bean
-        public DataSource configureDataSource() {
-                HikariConfig config = new HikariConfig();
-                config.setDriverClassName(dataSourceClassName);
-                config.setJdbcUrl(dataSourceUrl);
-                config.setUsername(user);
-                config.setPassword(password);
+    @Bean
+    public DataSource configureDataSource() {
+        HikariConfig config = new HikariConfig();
+        //config.setDriverClassName(dataSourceClassName);
+        config.setJdbcUrl(dataSourceUrl);
+        config.setUsername(user);
+        config.setPassword(password);
 
-                return new HikariDataSource(config);
-        }
+        return new HikariDataSource(config);
+    }
 
-        @Bean(name = "entityManagerFactory")
-        public LocalContainerEntityManagerFactoryBean configureEntityManagerFactory() {
-                LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-                entityManagerFactory.setDataSource(configureDataSource());
-                entityManagerFactory.setPackagesToScan("com.test.api");
-                entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+    @Bean(name = "entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean configureEntityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactory.setDataSource(configureDataSource());
+        entityManagerFactory.setPackagesToScan("com.test.api");
+        entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
-                Properties jpaProperties = new Properties();
-                jpaProperties.put(org.hibernate.cfg.Environment.DIALECT, dialect);
-                jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
-                entityManagerFactory.setJpaProperties(jpaProperties);
+        Properties jpaProperties = new Properties();
+        jpaProperties.put(org.hibernate.cfg.Environment.DIALECT, dialect);
+        jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
+        entityManagerFactory.setJpaProperties(jpaProperties);
 
-                return entityManagerFactory;
-        }
+        return entityManagerFactory;
+    }
 
-        @Bean
-        public PlatformTransactionManager annotationDrivenTransactionManager() {
-                return new JpaTransactionManager();
-        }
+    @Bean
+    public PlatformTransactionManager annotationDrivenTransactionManager() {
+        return new JpaTransactionManager();
+    }
 }

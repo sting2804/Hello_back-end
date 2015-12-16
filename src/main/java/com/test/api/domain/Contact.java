@@ -10,13 +10,13 @@ import javax.validation.constraints.Size;
 
 @Entity
 @JsonSerialize
-public class Contact extends ResourceSupport {
+public class Contact{
 
     @Id
     @GeneratedValue
     private Long id;
-    @Version
-    private Integer version;
+    //@Version
+    //private Integer version;
     @Size(max = 255)
     @Column(nullable = false, unique = true)
     private String name;
@@ -38,9 +38,9 @@ public class Contact extends ResourceSupport {
         return id;
     }
 
-    public Integer getVersion() {
+    /*public Integer getVersion() {
         return version;
-    }
+    }*/
 
     public String getName() {
         return name;

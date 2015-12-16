@@ -1,18 +1,15 @@
 package com.test.api;
 
 import com.test.api.config.DataSourceConfig;
-import com.test.api.data.DataGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@Component
+@ComponentScan
+@EnableAutoConfiguration
 public class HelloBackEndApplication {
-
-    @Autowired
-    public DataGenerator dataGenerator;
 
     public static void main(String[] args) {
         //SpringApplication.run(HelloBackEndApplication.class, args);

@@ -10,6 +10,7 @@ public class ContactParamsValidator {
 
     /**
      * проверяет, есть ли синтаксические ошибки в регулярном выражении
+     *
      * @param regularExpression
      * @return
      */

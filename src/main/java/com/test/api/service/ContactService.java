@@ -74,7 +74,7 @@ public class ContactService {
                         break;
                     } else {
                         List<Contact> filteredList = findAllContactsByRegex(contactList, nameFilter);
-                        if (filteredList.size() == 0 && offset == 0) {
+                        if (filteredList.size() == 0) {
                             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                         } else
                             response.setStatus(HttpServletResponse.SC_OK);
@@ -127,7 +127,7 @@ public class ContactService {
         return contactList;
     }
 
-    public static boolean checkWithRegExp(String regExp, String userNameString) {
+    public static boolean checkWithRegExp(String userNameString,String regExp) {
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(userNameString);
         return m.matches();
